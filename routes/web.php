@@ -48,3 +48,9 @@ Route::middleware(['auth', 'role:Miembro'])->group(function () {
         return view('reportes.index'); // Vista ficticia
     })->name('miembro.reportes.index');
 });
+
+
+Route::post('/logout', function () {
+    Auth::logout();
+    return redirect('/login'); // Redirigir directamente a login después de salir
+})->name('logout');
