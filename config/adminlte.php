@@ -312,7 +312,7 @@ return [
             'text' => 'Usuarios',
             'url'  => 'admin/users',
             'icon' => 'fas fa-users',
-            'can'  => 'crear usuarios',
+            'can'  => 'ver usuarios',
         ],
 
         [

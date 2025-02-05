@@ -15,14 +15,18 @@ class DatabaseSeeder extends Seeder
         // Definir roles y permisos
         $rolesPermissions = [
             'Pastor' => [
-                'gestionar congregación', 'gestionar eventos', 'ver reportes',
-                'crear usuarios', 'editar usuarios', 'eliminar usuarios'
+                'gestionar congregación', 'ver reportes generales',
+                'crear usuarios', 'ver usuarios', 'editar usuarios', 'eliminar usuarios',
+                'crear eventos', 'ver eventos', 'editar eventos', 'eliminar eventos',
+                'crear grupos', 'ver grupos', 'editar grupos', 'eliminar grupos',
             ],
             'Líder' => [
-                'gestionar grupos', 'gestionar eventos', 'ver reportes'
+                'gestionar grupos', 'ver reportes',
+                'crear eventos', 'ver eventos', 'editar eventos',
+                'crear grupos', 'ver grupos', 'editar grupos',
             ],
             'Miembro' => [
-                'ver eventos', 'ver reportes'
+                'ver eventos', 'ver reportes', 'ver grupos',
             ],
         ];
 
