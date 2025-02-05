@@ -257,7 +257,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => 'home',
+    'dashboard_url' => 'dashboard',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -297,7 +297,6 @@ return [
     | https://github.com/jeroennoten/Laravel-AdminLTE/wiki/Menu-Configuration
     |
     */
-
     'menu' => [
         ['header' => 'ADMINISTRACIÓN'],
 
@@ -305,35 +304,35 @@ return [
             'text' => 'Dashboard',
             'url'  => 'dashboard',
             'icon' => 'fas fa-tachometer-alt',
-            'can'  => 'ver reportes',
+            'can'  => 'ver reportes', // Solo los que tienen este permiso lo verán
         ],
 
         [
             'text' => 'Usuarios',
             'url'  => 'admin/users',
             'icon' => 'fas fa-users',
-            'can'  => 'ver usuarios',
+            'can'  => 'ver usuarios', // Solo los que tienen este permiso lo verán
         ],
 
         [
             'text' => 'Gestión de Congregación',
             'url'  => 'admin/congregacion',
             'icon' => 'fas fa-church',
-            'can'  => 'gestionar congregación',
+            'can'  => 'gestionar congregación', // Solo los que tienen este permiso lo verán
         ],
 
         [
             'text' => 'Eventos',
             'url'  => 'admin/eventos',
             'icon' => 'fas fa-calendar-alt',
-            'can'  => 'gestionar eventos',
+            'can'  => 'gestionar eventos', // Solo los que tienen este permiso lo verán
         ],
 
         [
             'text' => 'Reportes',
             'url'  => 'admin/reportes',
             'icon' => 'fas fa-chart-bar',
-            'can'  => 'ver reportes',
+            'can'  => 'ver reportes', // Solo los que tienen este permiso lo verán
         ],
 
         ['header' => 'AJUSTES'],
@@ -342,7 +341,7 @@ return [
             'text' => 'Configuración',
             'url'  => 'admin/settings',
             'icon' => 'fas fa-cogs',
-            'can'  => 'editar usuarios',
+            'can'  => 'editar usuarios', // Solo los que tienen este permiso lo verán
         ],
 
         [
@@ -364,10 +363,12 @@ return [
             'text' => 'Buscar',
             'topnav_right' => true,
         ],
+
         [
             'type' => 'fullscreen-widget',
             'topnav_right' => true,
         ],
+
 
         ['header' => 'OTRAS OPCIONES'],
 
@@ -419,7 +420,15 @@ return [
             'icon_color' => 'cyan',
             'url' => '#',
         ],
+
+        [
+            'text' => 'Cambiar Tema',
+            'url'  => '#',
+            'icon' => 'fas fa-moon',  // Icono para el botón
+            'id' => 'toggleTheme',  // Identificador único para el botón
+        ],
     ],
+
 
 
     /*
@@ -451,7 +460,7 @@ return [
     |
     | Here we can modify the plugins used inside the admin panel.
     |
-    | For detailed instructions you can look the plugins section here:
+    | For detailed instructions you can look the plughthemins section here:
     | https://github.com/jeroennoten/Laravel-AdminLTE/wiki/Plugins-Configuration
     |
     */
@@ -577,15 +586,16 @@ return [
     'livewire' => false,
 
     'auth' => [
-    'guards' => [
-        'web' => [
-            'driver' => 'session',
-            'provider' => 'users',
+        'guards' => [
+            'web' => [
+                'driver' => 'session',
+                'provider' => 'users',
+            ],
+        ],
+        'gate' => [
+            'enable' => true, // Habilitar esta opción
         ],
     ],
-    'gate' => [
-        'enable' => true, // Habilitar esta opción
-    ],
-],
-];
 
+
+];

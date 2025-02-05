@@ -22,35 +22,44 @@ Route::get('/', function () {
 // Autenticación
 Auth::routes();
 
-// Dashboard (para usuarios autenticados)
+// Dashboard (para todos los usuarios autenticados)
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
 });
 
+// Grupo de rutas de administración
+Route::middleware(['auth'])->prefix('admin')->group(function () {
 
-// Rutas protegidas solo para Pastores
-Route::middleware(['auth', 'role:Pastor'])->group(function () {
-    Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users.index');
+    // Gestión de Usuarios (Solo para Pastores)
+    Route::middleware(['role:Pastor'])->group(function () {
+        Route::get('users', [UserController::class, 'index'])->name('admin.users.index'); // Listar usuarios
+        Route::get('users/create', [UserController::class, 'create'])->name('admin.users.create'); // Formulario de creación
+        Route::post('users', [UserController::class, 'store'])->name('admin.users.store'); // Guardar usuario
+        Route::get('users/{user}/edit', [UserController::class, 'edit'])->name('admin.users.edit'); // Formulario de edición
+        Route::put('users/{user}', [UserController::class, 'update'])->name('admin.users.update'); // Actualizar usuario
+        Route::delete('users/{user}', [UserController::class, 'destroy'])->name('admin.users.destroy'); // Eliminar usuario
+    });
+
+    // Gestión de Eventos (Solo para Líderes)
+    Route::middleware('role:Líder')->group(function () {
+        Route::get('eventos', function () {
+            return view('eventos.index'); // Vista ficticia
+        })->name('admin.eventos.index');
+    });
+
+    // Gestión de Reportes (Acceso para Miembros)
+    Route::middleware('role:Miembro')->group(function () {
+        Route::get('reportes', function () {
+            return view('reportes.index'); // Vista ficticia
+        })->name('admin.reportes.index');
+    });
 });
 
-// Rutas protegidas solo para Líderes
-Route::middleware(['auth', 'role:Líder'])->group(function () {
-    Route::get('/admin/eventos', function () {
-        return view('eventos.index'); // Vista ficticia
-    })->name('admin.eventos.index');
-});
 
-// Rutas protegidas solo para Miembros
-Route::middleware(['auth', 'role:Miembro'])->group(function () {
-    Route::get('/miembro/reportes', function () {
-        return view('reportes.index'); // Vista ficticia
-    })->name('miembro.reportes.index');
-});
-
-
+// Logout (Redirección directa al login)
 Route::post('/logout', function () {
     Auth::logout();
-    return redirect('/login'); // Redirigir directamente a login después de salir
+    return redirect('/login');
 })->name('logout');
